@@ -104,8 +104,7 @@ define(function() {
         var apply_rules = function(str, rules, skip, override) {
             if (override) {
                 str = override;
-            }
-            else {
+            } else {
                 var ignore = (skip.indexOf(str.toLowerCase()) > -1);
                 if (!ignore) {
                     for (var x = 0; x < rules.length; x++) {
@@ -165,12 +164,7 @@ define(function() {
          "person".pluralize("guys") == "guys"
          */
         var pluralize = function(string, plural) {
-            return apply_rules(
-                string,
-                plural_rules,
-                uncountable_words,
-                plural
-            );
+            return apply_rules(string, plural_rules, uncountable_words, plural);
         };
 
         /*
@@ -188,12 +182,7 @@ define(function() {
          "guys".singularize("person") == "person"
          */
         var singularize = function(string, singular) {
-            return apply_rules(
-                string,
-                singular_rules,
-                uncountable_words,
-                singular
-            );
+            return apply_rules(string, singular_rules, uncountable_words, singular);
         };
 
         /*
@@ -265,7 +254,6 @@ define(function() {
             string = string.toLowerCase();
             string = string.replace(id_suffix, '');
             string = string.replace(underbar, ' ');
-            console.log("sttring", string);
             if (!lowFirstLetter) {
                 string = capitalize(string);
             }
@@ -327,7 +315,7 @@ define(function() {
                 var d = str_arr[x].split('-');
                 for (var i = 0; i < d.length; i++) {
                     if (non_titlecased_words.indexOf(d[i].toLowerCase()) < 0) {
-                        d[i] = d[i].capitalize();
+                        d[i] = capitalize(d[i]);
                     }
                 }
                 str_arr[x] = d.join('-');
@@ -366,7 +354,8 @@ define(function() {
          "MessageBusProperty".tableize() == "message_bus_properties"
          */
         var tableize = function(string) {
-            string = string.underscore().pluralize();
+            string = underscore(string);
+            string = pluralize(string);
             return string;
         };
 
@@ -382,7 +371,8 @@ define(function() {
          "message_bus_properties".classify() == "MessageBusProperty"
          */
         var classify = function(string) {
-            string = string.camelize().singularize();
+            string = camelize(string);
+            string = singularize(string);
             return string;
         };
 
@@ -400,7 +390,8 @@ define(function() {
          "MessageBusProperty".foreign_key(true) == "message_bus_propertyid"
          */
         var foreign_key = function(string, dropIdUbar) {
-            string = string.demodulize().underscore() + ((dropIdUbar) ? ('') : ('_')) + 'id';
+            string = demodulize(string);
+            string = underscore(string) + ((dropIdUbar) ? ('') : ('_')) + 'id';
             return string;
         };
 

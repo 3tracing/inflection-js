@@ -1,0 +1,5 @@
+require('inflection', function() {
+
+
+    describe();
+});

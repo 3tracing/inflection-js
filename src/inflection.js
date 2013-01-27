@@ -419,7 +419,7 @@ define(function() {
             var str_arr = string.split(' ');
             for (var x = 0; x < str_arr.length; x++) {
                 var i = parseInt(str_arr[x]);
-                if (i === NaN) {
+                if (!isNaN(i)) {
                     var ltd = str_arr[x].substring(str_arr[x].length - 2);
                     var ld = str_arr[x].substring(str_arr[x].length - 1);
                     var suf = "th";
